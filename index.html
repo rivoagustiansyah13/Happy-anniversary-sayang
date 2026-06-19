@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>6 Years with You - Vanisa & Rivo</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- Three.js untuk Efek 3D -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
@@ -19,11 +17,11 @@
             width: 100%;
             height: 100%;
             font-family: 'Poppins', sans-serif;
-            background-color: #030001; /* Hitam pekat */
-            color: #ffffff;
+            background-color: #fcf8f2; /* Warna dominan Cream hangat */
+            color: #1a2a3a; /* Biru Gelap untuk teks utama */
         }
 
-        /* Canvas 3D Latar Belakang (Dibuat paling belakang agar tidak menutupi teks) */
+        /* Canvas 3D Latar Belakang */
         #canvas-3d {
             position: fixed;
             top: 0;
@@ -31,7 +29,7 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            pointer-events: none; /* Supaya sentuhan jari langsung tembus ke teks surat */
+            pointer-events: none; /* Sentuhan jari langsung tembus ke teks surat */
         }
 
         /* LAYAR 1: Tampilan Utama (Hati Besar) */
@@ -48,28 +46,28 @@
             align-items: center;
             padding: 60px 20px;
             text-align: center;
-            background: radial-gradient(circle at center, transparent 20%, #030001 95%);
-            transition: opacity 1s ease, transform 1s ease;
+            background: radial-gradient(circle at center, transparent 20%, #fcf8f2 90%);
+            transition: opacity 1s ease;
             cursor: pointer;
         }
 
         #screen-1 h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 3.2rem;
-            color: #8a0314;
-            text-shadow: 0 0 25px rgba(138, 3, 20, 0.5);
+            color: #0f2c59; /* Biru Malam yang Romantis */
+            text-shadow: 0 0 15px rgba(15, 44, 89, 0.1);
             animation: pulseText 3s infinite ease-in-out;
         }
 
         .instruction {
             font-size: 0.85rem;
             letter-spacing: 4px;
-            color: #666;
+            color: #8c96a0;
             text-transform: uppercase;
             animation: blink 2.5s infinite;
         }
 
-        /* LAYAR 2: Tampilan Surat (Dibuat murni scrollable tanpa kunci layar) */
+        /* LAYAR 2: Tampilan Surat Berwarna Cream Estetik */
         #screen-2 {
             position: relative;
             z-index: 5;
@@ -77,120 +75,108 @@
             min-height: 100vh;
             display: none; /* Dikontrol via JavaScript */
             padding: 40px 20px;
-            background: rgba(3, 0, 1, 0.7);
-            box-sizing: border-box;
+            background: rgba(252, 248, 242, 0.6); /* Transparan agar hati merah di belakang tetap samar terlihat */
         }
 
-        /* Tampilan Bentuk Fisik Lembar Surat */
+        /* Lembar Surat Fisik Kertas Cream */
         .paper-letter {
-            background: linear-gradient(135deg, #120205 0%, #1c0409 100%);
-            padding: 35px 20px;
+            background: #fffdf9; /* Kertas cream bersih */
+            padding: 40px 25px;
             width: 100%;
             max-width: 450px;
-            margin: 0 auto; /* Tengah secara horizontal */
-            border-radius: 4px; 
+            margin: 0 auto;
+            border-radius: 8px; 
             box-shadow: 
-                inset 0 0 30px rgba(0, 0, 0, 0.9),
-                0 0 40px rgba(0, 0, 0, 0.9), 
-                0 0 20px rgba(138, 3, 20, 0.15);
+                0 10px 30px rgba(15, 44, 89, 0.08), 
+                0 1px 3px rgba(0, 0, 0, 0.02);
             position: relative;
-            border-left: 2px dashed rgba(138, 3, 20, 0.25); 
-            border-right: 1px solid rgba(138, 3, 20, 0.1);
-        }
-
-        /* Efek Garis Halus Kertas Surat */
-        .paper-letter::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(255,255,255,0.005) 96%, rgba(138, 3, 20, 0.04) 100%);
-            background-size: 100% 28px;
-            pointer-events: none;
+            border: 1px solid rgba(15, 44, 89, 0.05);
+            border-left: 3px double rgba(15, 44, 89, 0.15); /* Aksen garis buku biru estetik */
         }
 
         .paper-letter h2 {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.3rem;
-            color: #b30016;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #0f2c59; /* Biru Utama */
+            margin-bottom: 25px;
             text-align: center;
-            border-bottom: 1px solid rgba(138, 3, 20, 0.2);
-            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(15, 44, 89, 0.15);
+            padding-bottom: 12px;
         }
 
         .love-text {
-            font-size: 0.9rem;
-            line-height: 1.8;
-            color: #d9cbd1;
+            font-size: 0.92rem;
+            line-height: 1.9;
+            color: #2c3e50;
             text-align: justify;
         }
 
         .love-text p {
             margin-bottom: 15px;
-            text-indent: 20px; 
+            text-indent: 25px; 
         }
 
         .highlight-name {
-            color: #ff334b;
-            font-weight: 500;
+            color: #b30016; /* Nama Vanisa tetap Merah Romantis */
+            font-weight: 600;
         }
 
         .signature-block {
-            margin-top: 25px;
+            margin-top: 30px;
             text-align: right; 
             padding-right: 5px;
         }
 
         .signature-title {
             font-size: 0.75rem;
-            color: #777;
+            color: #7f8c8d;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .signature-name {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.3rem;
-            color: #b30016;
+            font-size: 2.5rem;
+            color: #0f2c59; /* Nama Rivo Biru Elegan */
             margin-top: 5px;
         }
 
-        /* Tombol penutup opsional di bagian bawah luar surat */
+        /* Tombol Kembali */
         .btn-back {
             display: block;
-            margin: 20px auto 0 auto;
-            background: transparent;
-            border: 1px solid rgba(138, 3, 20, 0.4);
-            color: #888;
-            padding: 8px 20px;
+            margin: 25px auto 0 auto;
+            background: #0f2c59;
+            border: none;
+            color: #ffffff;
+            padding: 10px 24px;
             border-radius: 20px;
             font-size: 0.8rem;
+            font-weight: 500;
             cursor: pointer;
+            box-shadow: 0 4px 10px rgba(15, 44, 89, 0.2);
         }
 
         /* Animasi */
         @keyframes pulseText {
-            0%, 100% { transform: scale(1); opacity: 0.85; }
-            50% { transform: scale(1.02); opacity: 1; text-shadow: 0 0 35px rgba(138, 3, 20, 0.7); }
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.02); opacity: 1; }
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.6; }
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Canvas 3D Latar Belakang -->
     <canvas id="canvas-3d"></canvas>
 
-    <!-- LAYAR 1: Tampilan Awal -->
     <div id="screen-1" onclick="bukaSurat()">
         <h1>Happy Anniversary Sayang</h1>
         <div class="instruction">Sentuh layar untuk membaca...</div>
     </div>
 
-    <!-- LAYAR 2: Tampilan Lembar Surat Fisik Romantis -->
     <div id="screen-2">
         <div class="paper-letter">
             <h2>6 Tahun Cerita Kita</h2>
@@ -221,7 +207,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Formasi Partikel Hati 3D
+        // Formasi Partikel Hati 3D (Warna Merah Cerah)
         const particlesCount = 2000;
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(particlesCount * 3);
@@ -240,29 +226,33 @@
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
         const material = new THREE.PointsMaterial({
-            size: 0.035,
-            color: 0x8a0314, // Warna merah maroon gelap langsung
+            size: 0.04,
+            color: 0xdd1133, // Warna MERAH cerah romantis untuk love-nya
             transparent: true,
-            opacity: 0.75
+            opacity: 0.85
         });
 
         const heartParticles = new THREE.Points(geometry, material);
         scene.add(heartParticles);
 
-        // Responsif Layar
+        // Responsif Perubahan Ukuran Layar
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
+        // Loop Animasi Motion Putar & Berdenyut
         const clock = new THREE.Clock();
         const animate = () => {
             const elapsedTime = clock.getElapsedTime();
-            heartParticles.rotation.y = elapsedTime * 0.25;
-            heartParticles.rotation.x = Math.sin(elapsedTime * 0.15) * 0.1;
             
-            const pulse = 1.0 + Math.sin(elapsedTime * 3.2) * 0.035;
+            // Motion berputar lambat yang anggun
+            heartParticles.rotation.y = elapsedTime * 0.25;
+            heartParticles.rotation.x = Math.sin(elapsedTime * 0.15) * 0.08;
+            
+            // Motion detak jantung (pulse action)
+            const pulse = 1.0 + Math.sin(elapsedTime * 3.0) * 0.04;
             heartParticles.scale.set(pulse, pulse, pulse);
 
             renderer.render(scene, camera);
@@ -272,16 +262,13 @@
 
         // --- FUNGSI INTERAKSI LAYAR ---
         function bukaSurat() {
-            // Sembunyikan layar utama dengan transisi halus
             const s1 = document.getElementById('screen-1');
             s1.style.opacity = '0';
             setTimeout(() => {
                 s1.style.display = 'none';
-                // Tampilkan layar surat murni
                 const s2 = document.getElementById('screen-2');
                 s2.style.display = 'block';
-                // Scroll otomatis ke posisi paling atas surat saat dibuka
-                window.scrollTo(0, 0);
+                window.scrollTo(0, 0); // Reset posisi scroll ke atas otomatis
             }, 1000);
         }
 
