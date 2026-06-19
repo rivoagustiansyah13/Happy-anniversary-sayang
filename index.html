@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6 Years with You - Vanisa & Dikri</title>
+    <title>6 Years with You - Vanisa & Rivo</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Three.js untuk Efek 3D -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
@@ -158,22 +160,25 @@
 </head>
 <body>
 
+    <!-- Canvas 3D untuk Hati Berdenyut -->
     <canvas id="canvas-3d"></canvas>
 
+    <!-- LAYAR 1: Tampilan Awal -->
     <div id="screen-1" onclick="bukaSurat()">
         <h1>Happy Anniversary Sayang</h1>
         <div class="instruction">Sentuh hatinya...</div>
     </div>
 
+    <!-- LAYAR 2: Surat Cinta Romantis -->
     <div id="screen-2">
         <div class="card">
             <h2>6 Tahun yang Indah...</h2>
             <div class="love-letter">
-                <p>Untuk bidadariku, <span class="highlight">Vanisa Mutiara Sapaati</span>.</p>
+                <p>Untuk bidadariku, <span class="highlight">Vanisa Mutiara Sapaati Dikri</span>.</p>
                 <p>Enam tahun berjalan di sampingmu adalah anugerah terindah yang pernah semesta berikan kepadaku. Seperti perpaduan merah mawar yang dalam dan hitamnya malam yang abadi, begitulah cintaku padamu: begitu tenang, sangat dalam, dan takkan pernah pudar.</p>
                 <p>Terima kasih telah menjadi pelukan paling hangat di kala aku lelah, dan menjadi alasan di balik setiap senyumanku. Di setiap helai tahun yang kita lewati, rasaku padamu selalu tumbuh menjadi lebih besar.</p>
                 <p>Selamat hari jadi yang ke-6, Sayangku. Tetaplah bersamaku, melukis hari esok yang lebih indah.</p>
-                <div class="signature">Dari Dikri yang mencintaimu</div>
+                <div class="signature">Dari Rivo yang mencintaimu</div>
             </div>
         </div>
     </div>
@@ -261,7 +266,7 @@
             heartParticles.rotation.x = Math.sin(elapsedTime * 0.15) * 0.1 + (mouseY * 0.4);
 
             // Efek Detak Jantung Romantis (Berdenyut konstan)
-            let pulseFactor = isZoomed ? 2.5 : 3.0; // Detak melambat manis di layar kedua
+            let pulseFactor = isZoomed ? 2.5 : 3.0; 
             const pulse = (isZoomed ? 0.7 : 1.0) + Math.sin(elapsedTime * pulseFactor) * 0.04;
             heartParticles.scale.set(pulse, pulse, pulse);
 
