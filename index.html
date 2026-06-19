@@ -57,7 +57,7 @@
         #screen-1 h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 3.2rem;
-            color: #990011; /* Merah maroon yang dalam */
+            color: #990011; /* Merah maroon mendalam */
             text-shadow: 0 0 20px rgba(153, 0, 17, 0.4);
             animation: pulseText 3s infinite ease-in-out;
         }
@@ -70,7 +70,7 @@
             animation: blink 2s infinite;
         }
 
-        /* LAYAR 2: Surat Cinta (Muncul setelah klik) */
+        /* LAYAR 2: Surat Cinta */
         #screen-2 {
             position: absolute;
             top: 0;
@@ -96,11 +96,11 @@
         }
 
         .card {
-            background: rgba(10, 2, 4, 0.8);
+            background: rgba(12, 2, 4, 0.85);
             padding: 40px 25px;
             border-radius: 24px;
-            border: 1px solid rgba(153, 0, 17, 0.25);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(153, 0, 17, 0.1);
+            border: 1px solid rgba(153, 0, 17, 0.3);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(153, 0, 17, 0.15);
             max-width: 500px;
             width: 100%;
             backdrop-filter: blur(15px);
@@ -118,7 +118,7 @@
         .love-letter {
             font-size: 1rem;
             line-height: 1.8;
-            color: #d1cbd0;
+            color: #e0d9de;
             text-align: center;
             font-weight: 300;
         }
@@ -128,16 +128,16 @@
         }
 
         .highlight {
-            color: #b30016;
+            color: #ff334b;
             font-weight: 500;
         }
 
         .signature {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             color: #b30016;
-            margin-top: 25px;
-            text-shadow: 0 0 5px rgba(179, 0, 22, 0.2);
+            margin-top: 30px;
+            text-shadow: 0 0 5px rgba(179, 0, 22, 0.3);
         }
 
         /* Animasi CSS */
@@ -153,7 +153,7 @@
 
         @media (max-width: 480px) {
             #screen-1 h1 { font-size: 2.6rem; }
-            .card { padding: 30px 20px; }
+            .card { padding: 35px 20px; }
             .love-letter { font-size: 0.95rem; }
         }
     </style>
@@ -174,10 +174,10 @@
         <div class="card">
             <h2>6 Tahun yang Indah...</h2>
             <div class="love-letter">
-                <p>Untuk bidadariku, <span class="highlight">Vanisa Mutiara Sapaati Dikri</span>.</p>
-                <p>Enam tahun berjalan di sampingmu adalah anugerah terindah yang pernah semesta berikan kepadaku. Seperti perpaduan merah mawar yang dalam dan hitamnya malam yang abadi, begitulah cintaku padamu: begitu tenang, sangat dalam, dan takkan pernah pudar.</p>
-                <p>Terima kasih telah menjadi pelukan paling hangat di kala aku lelah, dan menjadi alasan di balik setiap senyumanku. Di setiap helai tahun yang kita lewati, rasaku padamu selalu tumbuh menjadi lebih besar.</p>
-                <p>Selamat hari jadi yang ke-6, Sayangku. Tetaplah bersamaku, melukis hari esok yang lebih indah.</p>
+                <p>Untuk bidadariku tercinta, <br><span class="highlight">Vanisa Mutiara Sapaati Dikri</span>.</p>
+                <p>Enam tahun berjalan beriringan bersamamu adalah takdir terindah yang amat aku syukuri. Seperti perpaduan warna merah yang mendalam dan hitamnya malam yang abadi, begitulah caraku mencintaimu: sebuah ketulusan yang kuat, tenang, dan tidak akan pernah pudar oleh waktu.</p>
+                <p>Terima kasih telah menjadi rumah tempatku pulang, menjadi pelukan paling hangat di kala dunia terasa melelahkan, dan selalu melengkapi setiap kurangku dengan kasih sayangmu.</p>
+                <p>Selamat hari jadi yang ke-6, Sayangku. Mari kita terus melangkah bersama, merajut lebih banyak bahagia dan menjaga rasa ini selamanya.</p>
                 <div class="signature">Dari Rivo yang mencintaimu</div>
             </div>
         </div>
@@ -195,8 +195,8 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Membuat Formasi Hati 3D Menggunakan Partikel Lembut
-        const particlesCount = 2000;
+        // Formasi Hati 3D
+        const particlesCount = 2200;
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(particlesCount * 3);
         const colors = new Float32Array(particlesCount * 3);
@@ -204,27 +204,25 @@
         for(let i = 0; i < particlesCount; i++) {
             const t = Math.PI * 2 * (i / particlesCount);
             
-            // Persamaan Matematika Bentuk Hati Nyata
             const x = 16 * Math.pow(Math.sin(t), 3);
             const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
             const z = (Math.random() - 0.5) * 8; 
 
-            // Skala ukuran hati
             positions[i * 3] = x * 0.16 + (Math.random() - 0.5) * 0.15;
             positions[i * 3 + 1] = y * 0.16 + (Math.random() - 0.5) * 0.15;
             positions[i * 3 + 2] = z * 0.1;
 
-            // Gradasi warna merah tua elegan (Merah gelap/Maroon)
-            colors[i * 3] = 0.4 + Math.random() * 0.2; // R (Merah gelap)
-            colors[i * 3 + 1] = 0.0;                   // G
-            colors[i * 3 + 2] = 0.05;                  // B
+            // Merah mawar tua pekat romantis
+            colors[i * 3] = 0.45 + Math.random() * 0.15; 
+            colors[i * 3 + 1] = 0.01;                   
+            colors[i * 3 + 2] = 0.04;                  
         }
 
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
         const material = new THREE.PointsMaterial({
-            size: 0.035,
+            size: 0.038,
             vertexColors: true,
             transparent: true,
             opacity: 0.85,
@@ -234,7 +232,6 @@
         const heartParticles = new THREE.Points(geometry, material);
         scene.add(heartParticles);
 
-        // Interaksi Gerakan Layar / Mouse
         let mouseX = 0;
         let mouseY = 0;
         
@@ -254,20 +251,17 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Loop Animasi 3D (Detak Jantung & Putaran Halus)
         const clock = new THREE.Clock();
         let isZoomed = false;
 
         const animate = () => {
             const elapsedTime = clock.getElapsedTime();
 
-            // Rotasi lambat konstan + interaksi sentuhan
-            heartParticles.rotation.y = elapsedTime * 0.2 + (mouseX * 0.4);
+            heartParticles.rotation.y = elapsedTime * 0.25 + (mouseX * 0.4);
             heartParticles.rotation.x = Math.sin(elapsedTime * 0.15) * 0.1 + (mouseY * 0.4);
 
-            // Efek Detak Jantung Romantis (Berdenyut konstan)
-            let pulseFactor = isZoomed ? 2.5 : 3.0; 
-            const pulse = (isZoomed ? 0.7 : 1.0) + Math.sin(elapsedTime * pulseFactor) * 0.04;
+            let pulseFactor = isZoomed ? 2.2 : 3.0; 
+            const pulse = (isZoomed ? 0.75 : 1.0) + Math.sin(elapsedTime * pulseFactor) * 0.04;
             heartParticles.scale.set(pulse, pulse, pulse);
 
             renderer.render(scene, camera);
@@ -276,16 +270,14 @@
 
         animate();
 
-        // --- FUNGSI INTERAKSI LAYAR ---
+        // Fungsi Transisi Layar
         function bukaSurat() {
             isZoomed = true;
-            // Sembunyikan layar utama
             const s1 = document.getElementById('screen-1');
             s1.style.opacity = '0';
             s1.style.transform = 'scale(1.1)';
             setTimeout(() => s1.style.display = 'none', 1500);
 
-            // Munculkan surat cinta
             document.getElementById('screen-2').classList.add('active');
         }
     </script>
