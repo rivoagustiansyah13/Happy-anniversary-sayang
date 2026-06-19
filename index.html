@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6 Years of Us - Vanisa & Dikri</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0002;
+            color: #ffffff;
+        }
+
+        /* Canvas untuk 3D */
+        #canvas-3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Konten Utama */
+        .container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to bottom, rgba(10, 0, 2, 0.8), rgba(30, 0, 5, 0.9));
+        }
+
+        .card {
+            background: rgba(15, 5, 8, 0.75);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(218, 12, 12, 0.3);
+            box-shadow: 0 0 30px rgba(218, 12, 12, 0.2);
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #ff2a4b;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(255, 42, 75, 0.6);
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #b3b3b3;
+            margin-bottom: 30px;
+        }
+
+        .love-letter {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .highlight {
+            color: #ff2a4b;
+            font-weight: 600;
+        }
+
+        /* Tombol Interaktif */
+        .btn-love {
+            background: linear-gradient(45deg, #800016, #ff2a4b);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 42, 75, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-love:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 42, 75, 0.7);
+        }
+
+        /* Pop-up Kejutan */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: #1a0206;
+            border: 2px solid #ff2a4b;
+            padding: 30px;
+            border-radius: 15px;
+            z-index: 10;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+        }
+
+        .popup.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .popup h3 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: #ff2a4b;
+            margin-bottom: 15px;
+        }
+
+        .popup-close {
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid #ff2a4b;
+            color: #ff2a4b;
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .popup-close:hover {
+            background: #ff2a4b;
+            color: white;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 9;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 2.8rem; }
+            .card { padding: 25px 20px; }
+            .love-letter { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-3d"></canvas>
+
+    <div class="container">
+        <div class="card">
+            <h1>Happy 6th Anniversary</h1>
+            <h2>Vanisa Mutiara Sapaati</h2>
+            
+            <div class="love-letter">
+                <p>Untuk <span class="highlight">Vanisa Mutiara Sapaati</span> tercinta,</p>
+                <br>
+                <p>Enam tahun telah berlalu, dan setiap detiknya bersamamu adalah bagian terbaik dari hidupku. Seperti perpaduan warna merah yang membara dan hitam yang abadi, begitulah caraku mencintaimu: sebuah perasaan yang mendalam, kuat, dan takkan pernah pudar oleh waktu.</p>
+                <br>
+                <p>Terima kasih telah bertahan, menemani, dan melengkapi petualangan hidup ini bersama <span class="highlight">Dikri</span>. Selamat ulang tahun pernikahan/jadian yang ke-6, Sayang. Mari kita terus merajut cerita indah ini bersama, selamanya.</p>
+            </div>
+
+            <button class="btn-love" onclick="bukaKejutan()">Sentuh Hati Ini</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="tutupKejutan()"></div>
+    <div class="popup" id="popup">
+        <h3>Pesan Kecil dari Dikri</h3>
+        <p>"Di semesta yang luas ini, aku beruntung detak jantungku menemukan rumahnya di dalam dirimu. Aku mencintaimu hari ini, esok, dan di setiap lembaran tahun berikutnya, Vanisa." ❤️</p>
+        <button class="popup-close" onclick="tutupKejutan()">Tutup</button>
+    </div>
+
+    <script>
+        // --- SCRIPT 3D ACTION (THREE.JS) ---
+        const canvas = document.querySelector('#canvas-3d');
+        const scene = new THREE.Scene();
+        
+        // Kamera
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Renderer
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Membuat bentuk Hati 3D dengan Partikel
+        const particlesCount = 1500;
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particlesCount * 3);
+        const colors = new Float32Array(particlesCount * 3);
+
+        // Formula matematika berbentuk hati (Heart Curve)
+        for(let i = 0; i < particlesCount; i++) {
+            const t = Math.PI * 2 * (i / particlesCount);
+            
+            // Formula Hati 3D
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+            const z = (Math.random() - 0.5) * 10; // Memberikan efek kedalaman 3D
+
+            // Skala agar pas di layar
+            positions[i * 3] = x * 0.15 + (Math.random() - 0.5) * 0.2;
+            positions[i * 3 + 1] = y * 0.15 + (Math.random() - 0.5) * 0.2;
+            positions[i * 3 + 2] = z * 0.1;
+
+            // Warna partikel (Gradasi Merah Terang ke Merah Gelap/Hitam)
+            colors[i * 3] = 0.5 + Math.random() * 0.5; // Komponen Merah (R)
+            colors[i * 3 + 1] = 0.0;                   // Komponen Hijau (G)
+            colors[i * 3 + 2] = 0.1;                   // Komponen Biru (B)
+        }
+
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        // Material Partikel
+        const material = new THREE.PointsMaterial({
+            size: 0.04,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
+        });
+
+        // Satukan ke dalam Objek Points
+        const heartParticles = new THREE.Points(geometry, material);
+        scene.add(heartParticles);
+
+        // Interaksi Mouse (3D Action saat kursor bergerak)
+        let mouseX = 0;
+        let mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) - 0.5;
+            mouseY = (event.clientY / window.innerHeight) - 0.5;
+        });
+
+        // Responsif saat layar berubah ukuran
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Animasi Loop (Pergerakan 3D)
+        const clock = new THREE.Clock();
+
+        const animate = () => {
+            const elapsedTime = clock.getElapsedTime();
+
+            // Rotasi otomatis konstan
+            heartParticles.rotation.y = elapsedTime * 0.3;
+            heartParticles.rotation.x = Math.sin(elapsedTime * 0.2) * 0.2;
+
+            // Reaksi interaktif mengikuti pergerakan mouse/sentuhan
+            heartParticles.rotation.y += mouseX * 0.5;
+            heartParticles.rotation.x += mouseY * 0.5;
+
+            // Efek berdenyut (seperti detak jantung)
+            const pulse = 1 + Math.sin(elapsedTime * 3) * 0.05;
+            heartParticles.scale.set(pulse, pulse, pulse);
+
+            renderer.render(scene, camera);
+            window.requestAnimationFrame(animate);
+        };
+
+        animate();
+
+        // --- SCRIPT INTERAKSI UI ---
+        function bukaKejutan() {
+            document.getElementById('popup').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        function tutupKejutan() {
+            document.getElementById('popup').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
